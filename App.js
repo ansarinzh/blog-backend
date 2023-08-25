@@ -4,7 +4,7 @@ const morgan = require("morgan");
 const cors = require("cors");
 require("dotenv/config");
 var cookieParser = require("cookie-parser");
-const path =require('path')
+const path = require('path')
 
 const DbConn = require("./Database/dbcon");
 // for more data
@@ -26,6 +26,7 @@ app.use("/", require("./routes/routes"));
 
 app.use("/api/blog", require("./routes/blog"));
 app.use("/api/comment", require("./routes/comment"));
+app.use("/api/category", require("./routes/category"));
 
 
 //use this to show the image you have in node js server to client (react js)
@@ -33,17 +34,17 @@ app.use("/api/comment", require("./routes/comment"));
 
 // Serve static assets if in production
 
-  // Set static folder
-  app.use(express.static("./uploads"));
+// Set static folder
+app.use(express.static("./uploads"));
 
-  // console.log("path",express.static("/uplaods"))
+// console.log("path",express.static("/uplaods"))
 // if (process.env.NODE_ENV === "production") {
 
 
-  // index.html for all page routes
-  // app.get("*", (req, res) => {
-  //   res.sendFile(path.resolve(__dirname, "client", "build", "index.html"));
-  // });
+// index.html for all page routes
+// app.get("*", (req, res) => {
+//   res.sendFile(path.resolve(__dirname, "client", "build", "index.html"));
+// });
 // } 
 
 //Database
