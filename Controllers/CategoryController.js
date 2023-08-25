@@ -20,7 +20,7 @@ const getallCategory = async (req, res) => {
   // to log every action in the backend "createLog" is used
   LogController.createLog('info', 'Hi this is a test log', req)
   const getallcategorydata = await getallcategory();
-  if (!getallcategorydata) return res.status(500).send("the data is not found");
+  if (!getallcategorydata) return res.status(400).send("the data is not found");
   res.status(200).send(getallcategorydata);
 };
 
@@ -29,7 +29,7 @@ const getSingleCategory = async (req, res) => {
   console.log("rber");
   const signleCategoy = await getSingleCategoryCore(req);
   if (!signleCategoy)
-    return res.status(500).json({
+    return res.status(400).json({
       message: "The category with the given ID was not found.",
     });
   res.status(200).send(signleCategoy);
@@ -39,7 +39,7 @@ const getSingleCategory = async (req, res) => {
 const updateCategory = async (req, res) => {
   const updatecategory = await updateCategoryCore(req);
   if (!updatecategory)
-    return res.status(500).json({
+    return res.status(400).json({
       message: "The category with the given ID was not found.",
     });
   res.status(200).send(updatecategory);
@@ -49,7 +49,7 @@ const updateCategory = async (req, res) => {
 const deleteCategory = async (req, res) => {
   const detelecategory = await deleteCategoryCore(req);
   if (!detelecategory)
-    return res.status(500).json({
+    return res.status(400).json({
       message: "The category with the given ID was not found.",
     });
   res.status(200).json({ success: true, message: "the category is deleted!" });
