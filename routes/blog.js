@@ -48,7 +48,10 @@ router.post("/createPost", async (req, res) => {
   try {
     if (imageThumb) {
       /** upload base64 data into cloudinary */
-      const uploadedResponse = await cloudinary.uploader.upload(imageThumb, { upload_preset: "blogImg" });
+      // const uploadedResponse =  await cloudinary.uploader.upload(imageThumb, { upload_preset: 'samples/ecommerce' });
+      const uploadedResponse = {
+        url: "https://cdn.pixabay.com/photo/2018/08/26/23/55/woman-3633737_1280.jpg"
+      }
 
       if (uploadedResponse) {
         const comment = await new Comment({ commentArray: [], bookmark: [] }).save();
@@ -71,6 +74,8 @@ router.post("/createPost", async (req, res) => {
           return res.status(400).json({ status: "fail", message: "the blog cannot be created!" });
         return res.status(200).json({ status: "Success", data: blog });
       }
+    } else {
+      console.log('No Images attached');
     }
   } catch (error) {
     console.log("err", error);
