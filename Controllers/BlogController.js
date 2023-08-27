@@ -10,6 +10,9 @@ const listPostByCategory = async (req, res) => {
 
 
 const searchPosts = async (req, res) => {
+    if (req.query.input === "") {
+        return res.status(400).json({ message: `Please type some words` })
+    }
     const search_data = await Blog.find({ title: { $regex: req.query.input, $options: "i" } })
     if (!search_data || search_data?.length === 0) {
         return res.status(400).json({ message: `Blogs not found` })
