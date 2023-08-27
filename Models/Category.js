@@ -13,6 +13,10 @@ const categorySchema = mongoose.Schema({
     type: String,
     default: "",
   },
+  slug: {
+    type: String,
+    default: "",
+  }
 });
 
 exports.Category = mongoose.model("Category", categorySchema);

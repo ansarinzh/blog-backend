@@ -5,6 +5,7 @@ const createNewCategory = async (req, res) => {
     name: req.body.name,
     color: req.body.color,
     image: req.body.image,
+    slug: req.body.slug
   });
   return (category = await category.save());
 };
