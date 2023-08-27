@@ -5,6 +5,7 @@ const { Blog } = require("../Models/Blog");
 const multer = require("multer");
 const cloudinary = require("../Utils/Cloudinary");
 const { Comment } = require("../Models/Comment");
+const { listPostByCategory, searchPosts } = require("../Controllers/BlogController");
 
 // STORAGE MULTER CONFIG
 let storage = multer.diskStorage({
@@ -102,6 +103,11 @@ router.get("/getsingle/:slug", async (req, res) => {
     return res.status(400).json({ message: "The User with the given ID was not found." });
   res.status(200).json({ data: getsignleblog });
 });
+
+
+router.get("/postByCategory", listPostByCategory)
+router.get("/search", searchPosts)
+
 
 module.exports = router;
 
