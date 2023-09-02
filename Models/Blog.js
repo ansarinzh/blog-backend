@@ -23,6 +23,9 @@ const blogSchema = mongoose.Schema(
     category: {
       type: String,
     },
+    categoryId: {
+      type: Schema.Types.ObjectId,
+    },
     writer: {
       type: Schema.Types.ObjectId,
       ref: "User",
