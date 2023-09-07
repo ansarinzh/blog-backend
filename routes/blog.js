@@ -1,11 +1,12 @@
 const express = require("express");
 const router = express.Router();
-const { Blog } = require("../Models/Blog");
+const Blog = require("../Models/Blog");
+const { Types } = require('mongoose')
 
 const multer = require("multer");
 const cloudinary = require("../Utils/Cloudinary");
-const { Comment } = require("../Models/Comment");
-const { listPostByCategory, searchPosts } = require("../Controllers/BlogController");
+const Comment = require("../Models/Comment");
+const { listPostByCategory, searchPosts, updateBlogStatus } = require("../Controllers/BlogController");
 
 // STORAGE MULTER CONFIG
 let storage = multer.diskStorage({
@@ -44,9 +45,15 @@ router.post("/uploadfiles", (req, res) => {
 
 router.post("/createPost", async (req, res) => {
   // console.log("reqqqq", req.body.data);
-  const { content, title, category, imageThumb } = req.body.data;
+
+  // when the payload is empty
+  if (!req.body || !req.body.data) {
+    return res.status(400).json({ message: "Empty Data" })
+  }
+
 
   try {
+    const { content, title, category, imageThumb, categoryId } = req.body.data;
     if (imageThumb) {
       /** upload base64 data into cloudinary */
       // const uploadedResponse =  await cloudinary.uploader.upload(imageThumb, { upload_preset: 'samples/ecommerce' });
@@ -64,6 +71,7 @@ router.post("/createPost", async (req, res) => {
           content,
           title,
           category,
+          categoryId: new Types.ObjectId(categoryId),
           imageThumb: uploadedResponse?.url,
           comment: comment._id
         });
@@ -97,6 +105,9 @@ router.get("/getBlogs", async (req, res) => {
 
 // signel data
 router.get("/getsingle/:slug", async (req, res) => {
+  if (!req.params?.slug) {
+    return res.status(400).json({ message: "Please provide slug" })
+  }
 
   const getsignleblog = await Blog.findOne({ slug: req.params.slug }).populate('comment')
   if (!getsignleblog)
@@ -107,6 +118,7 @@ router.get("/getsingle/:slug", async (req, res) => {
 
 router.get("/postByCategory", listPostByCategory)
 router.get("/search", searchPosts)
+router.post("/updateStatus", updateBlogStatus)
 
 
 module.exports = router;
