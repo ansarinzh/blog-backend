@@ -1,8 +1,8 @@
 const express = require("express");
 const { Types } = require("mongoose");
 const router = express.Router();
-const { Comment } = require("../Models/Comment");
-const { Blog } = require("../Models/Blog");
+const Comment = require("../Models/Comment");
+const Blog = require("../Models/Blog");
 
 
 router.post("/createCommnet", async (req, res) => {

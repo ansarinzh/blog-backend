@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 const slug = require("slug");
-const blogSchema = mongoose.Schema(
+const blogSchema = new Schema(
   {
     content: {
       type: String,
@@ -35,6 +35,10 @@ const blogSchema = mongoose.Schema(
       ref: "Comment",
     },
     imageThumb: { type: Object, required: true },
+    status: {
+      type: String,
+      required: true
+    }
   },
   { timestamps: true }
 );
@@ -56,8 +60,7 @@ blogSchema.methods.slugify = function () {
 // };
 
 const Blog = mongoose.model("Blog", blogSchema);
-
-module.exports = { Blog };
+module.exports = Blog;
 
 //image url
 //title

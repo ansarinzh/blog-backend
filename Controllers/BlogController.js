@@ -1,4 +1,4 @@
-const { Blog } = require("../Models/Blog")
+const Blog = require("../Models/Blog")
 const { Types } = require('mongoose')
 
 const listPostByCategory = async (req, res) => {
@@ -22,7 +22,19 @@ const searchPosts = async (req, res) => {
 }
 
 
+const updateBlogStatus = async (req, res) => {
+    if (req.body === "" || req.body === undefined) {
+        return res.status(400).json({ message: `Status should not be empty` })
+    }
+    const update = await Blog.updateOne({ _id: new Types.ObjectId(req.body.id) }, { $set: { status: req.body.status } })
+    if (!update) {
+        return res.status(400).json({ message: `Unable to update the status of the blog` })
+    }
+    return res.status(200).json({ message: `Status updated successfully` })
+
+}
+
 
 module.exports = {
-    listPostByCategory, searchPosts
+    listPostByCategory, searchPosts, updateBlogStatus
 }
