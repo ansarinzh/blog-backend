@@ -2,7 +2,7 @@ const Blog = require("../Models/Blog")
 const { Types } = require('mongoose')
 
 const listPostByCategory = async (req, res) => {
-    const data = await Blog.find({ categoryId: new Types.ObjectId(req.query.categoryId) })
+    const data = await Blog.find({ category: new Types.ObjectId(req.query.categoryId) }).populate("category")
     if (!data || data?.length === 0) {
         return res.status(400).json({ message: `No posts found under categoryId ${req.query.categoryId}` })
     }

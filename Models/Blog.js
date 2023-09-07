@@ -21,10 +21,8 @@ const blogSchema = new Schema(
       type: String,
     },
     category: {
-      type: String,
-    },
-    categoryId: {
       type: Schema.Types.ObjectId,
+      ref: "Category",
     },
     writer: {
       type: Schema.Types.ObjectId,
