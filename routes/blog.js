@@ -53,7 +53,7 @@ router.post("/createPost", async (req, res) => {
 
 
   try {
-    const { content, title, category, imageThumb, categoryId, status } = req.body.data;
+    const { content, title, category, imageThumb, status } = req.body.data;
     if (imageThumb) {
       /** upload base64 data into cloudinary */
       // const uploadedResponse =  await cloudinary.uploader.upload(imageThumb, { upload_preset: 'samples/ecommerce' });
@@ -70,8 +70,7 @@ router.post("/createPost", async (req, res) => {
         const blog = new Blog({
           content,
           title,
-          category,
-          categoryId: new Types.ObjectId(categoryId),
+          category: new Types.ObjectId(category),
           imageThumb: uploadedResponse?.url,
           comment: comment._id,
           status: status
