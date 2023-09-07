@@ -98,7 +98,7 @@ router.get("/getBlogs", async (req, res) => {
   // const limit = parseInt(req.query.limit);
   // const skipIndex = (page - 1) * limit;
 
-  const getallblogs = await Blog.find().sort({ _id: -1 });
+  const getallblogs = await Blog.find().sort({ _id: -1 }).populate('category');
   if (!getallblogs) return res.status(400).send("the blogs is not found");
   res.status(200).json({ data: getallblogs });
 });
